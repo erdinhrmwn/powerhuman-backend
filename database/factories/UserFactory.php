@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'username' => $username,
             'email' => $email,
             'password' => $password,
-            'email_verified_at' => now(),
+            'email_verified_at' => $this->faker->randomElement([now(), null]),
             'remember_token' => Str::random(10),
         ];
     }

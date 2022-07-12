@@ -16,9 +16,9 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignIdFor(Company::class)->constrained()->nullOnDelete();
             $table->string('name');
             $table->string('icon');
-            $table->foreignIdFor(Company::class)->constrained()->nullOnDelete();
 
             $table->softDeletes();
             $table->timestamps();

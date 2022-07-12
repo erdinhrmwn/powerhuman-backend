@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('responsibilities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignIdFor(Role::class)->constrained()->nullOnDelete();
+            $table->string('name');
 
             $table->softDeletes();
             $table->timestamps();

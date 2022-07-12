@@ -17,6 +17,8 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('role_id')->constrained()->nullOnDelete();
+            $table->foreignUuid('team_id')->constrained()->nullOnDelete();
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('gender', ['male', 'female'])->nullable();
@@ -24,10 +26,6 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('photo')->nullable();
 
-            $table->foreignId('role_id')->constrained()->nullOnDelete();
-            $table->foreignUuid('team_id')->constrained()->nullOnDelete();
-
-            $table->boolean('is_verified')->default(false);
             $table->timestamp('verified_at')->nullable();
 
             $table->softDeletes();

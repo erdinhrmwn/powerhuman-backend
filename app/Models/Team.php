@@ -13,7 +13,14 @@ class Team extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $keyType = 'uuid';
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.

@@ -61,12 +61,34 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Scope a query to only include verified users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeVerified($query)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
+
+    /**
+     * Scope a query to only include unverified users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnverified($query)
+    {
+        return $query->whereNull('email_verified_at');
+    }
+
+    /**
      * Get all of the companies for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function companies()
     {
-        return $this->belongsToMany(Company::class, 'user_companies');
+        return $this->belongsToMany(Company::class);
     }
 }

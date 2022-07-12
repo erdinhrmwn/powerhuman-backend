@@ -15,11 +15,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_companies', function (Blueprint $table) {
-            $table->id();
+        Schema::create('company_user', function (Blueprint $table) {
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
-            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_companies');
+        Schema::dropIfExists('company_user');
     }
 };

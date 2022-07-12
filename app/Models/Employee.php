@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +26,6 @@ class Employee extends Model
         'photo',
         'team_id',
         'role_id',
-        'is_verified',
         'verified_at',
     ];
 
@@ -36,6 +36,7 @@ class Employee extends Model
      */
     protected $casts = [
         'age' => 'integer',
+        'gender' => Gender::class,
         'verified_at' => 'datetime',
     ];
 
