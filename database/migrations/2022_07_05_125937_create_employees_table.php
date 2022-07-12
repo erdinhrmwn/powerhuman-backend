@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->constrained()->nullOnDelete();
-            $table->foreignUuid('team_id')->constrained()->nullOnDelete();
+            $table->foreignId('role_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('team_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('gender', ['male', 'female'])->nullable();
