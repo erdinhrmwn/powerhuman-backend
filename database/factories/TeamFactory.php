@@ -18,7 +18,7 @@ class TeamFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->jobTitle(),
+            'name' => $this->faker->unique()->jobTitle(),
             'icon' => $this->faker->imageUrl(500, 500, 'icon'),
             'company_id' => Company::query()->inRandomOrder()->value('id'),
         ];

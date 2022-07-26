@@ -6,7 +6,6 @@ use App\Enums\Gender;
 use App\Models\Role;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
@@ -20,7 +19,6 @@ class EmployeeFactory extends Factory
      */
     public function definition()
     {
-
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),

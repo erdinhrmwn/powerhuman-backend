@@ -3,9 +3,9 @@
 namespace App\Exceptions;
 
 use App\Helpers\ResponseFormatter;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -46,8 +46,13 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (NotFoundHttpException $e) {
-            if (request()->is('api/*'))
+            if (request()->is('api/*')) {
                 return ResponseFormatter::error('Record not found', 404);
+            }
+        });
+
+        $this->renderable(function (AuthenticationException $e) {
+            return ResponseFormatter::error('Unauthenticated.', 401);
         });
     }
 }

@@ -15,7 +15,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
+            $table->uuid('uuid')->index();
             $table->foreignIdFor(Company::class)->nullable()->constrained()->nullOnDelete();
             $table->string('name');
             $table->string('icon');

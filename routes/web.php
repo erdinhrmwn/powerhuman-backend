@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    'verified',
 ])->group(function () {
     Route::view('/', 'dashboard')->name('dashboard');
 });
