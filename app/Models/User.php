@@ -95,7 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function username(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             set: fn ($value) => strtolower($value),
             get: fn ($value) => strtolower($value),
         );

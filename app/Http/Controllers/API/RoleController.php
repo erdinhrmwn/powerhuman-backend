@@ -6,7 +6,6 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
-use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -21,7 +20,8 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $limit = $request->input('limit', 10);
-        $roles = Role::query()->simplePaginate((int) $limit);
+        $companies = $request->user()->companies();
+        $roles = Role::query()->whereIn('company_id', $companies->pluck('id'))->simplePaginate((int) $limit);
 
         return ResponseFormatter::success($roles, 'Role successfully retrieved.');
     }
@@ -35,7 +35,12 @@ class RoleController extends Controller
     public function store(CreateRoleRequest $request)
     {
         try {
-            $company = Company::findOrFail($request->company_id);
+            $company = $request->user()->companies()->find($request->company_id);
+
+            if ($company == null) {
+                throw new \Exception('You dont have access to this resource.', 403);
+            }
+
             $role = $company->roles()->create($request->all());
 
             return ResponseFormatter::success($role, 'Role successfully created.');
@@ -52,6 +57,10 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        if (! $this->isGranted($role)) {
+            return ResponseFormatter::error('You dont have access to this resource.', 403);
+        }
+
         return ResponseFormatter::success($role, 'Role successfully retrieved.');
     }
 
@@ -65,6 +74,10 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, Role $role)
     {
         try {
+            if (! $this->isGranted($role)) {
+                throw new \Exception('You dont have access to this resource.', 403);
+            }
+
             $role->update($request->all());
 
             return ResponseFormatter::success($role, 'Role successfully update.');
@@ -82,11 +95,20 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         try {
+            if (! $this->isGranted($role)) {
+                throw new \Exception('You dont have access to this resource.', 403);
+            }
+
             $role->delete();
 
             return ResponseFormatter::success(message: 'Role successfully deleted.');
         } catch (\Throwable $th) {
             return ResponseFormatter::error($th->getMessage(), $th->getCode());
         }
+    }
+
+    private function isGranted(Role $role)
+    {
+        return request()->user()->companies()->where('id', $role->company_id)->exists();
     }
 }

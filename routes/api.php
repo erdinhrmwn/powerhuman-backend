@@ -21,6 +21,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('company', CompanyController::class);
     Route::apiResource('team', TeamController::class);
+    Route::apiResource('role', RoleController::class);
+    Route::apiResource('responsibility', ResponsibilityController::class);
+    Route::apiResource('employee', EmployeeController::class);
 });
 
 Route::controller(AuthController::class)->group(function () {

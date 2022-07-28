@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Gender;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -58,5 +59,17 @@ class Employee extends Model
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function phone(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => str($value)->replaceMatches('/[^0-9]/', '')->whenStartsWith('0', function ($string) {
+                return $string->replaceFirst('0', '+62');
+            }),
+            get: fn ($value) => str($value)->replaceMatches('/[^0-9]/', '')->whenStartsWith('0', function ($string) {
+                return $string->replaceFirst('0', '+62');
+            }),
+        );
     }
 }

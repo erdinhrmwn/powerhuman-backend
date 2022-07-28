@@ -26,7 +26,7 @@ class CreateRoleRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'company_id' => 'required|integer|exists:teams',
+            'company_id' => 'required|integer|exists:companies,id',
         ];
     }
 }
