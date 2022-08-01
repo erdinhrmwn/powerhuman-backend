@@ -22,7 +22,7 @@ class EmployeeFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'gender' => $this->faker->randomElement([Gender::male, Gender::female]),
+            'gender' => $this->faker->randomElement([Gender::MALE, Gender::MALE]),
             'age' => $this->faker->numberBetween(18, 50),
             'phone' => $this->faker->phoneNumber(),
             'photo' => $this->faker->imageUrl(1024, 1024, 'person'),

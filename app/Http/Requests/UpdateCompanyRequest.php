@@ -25,7 +25,7 @@ class UpdateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

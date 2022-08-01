@@ -24,14 +24,12 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        $employee = $this->route('employee');
-
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|string|max:255|unique:employees,email,'.$employee->id,
+            'email' => 'required|email|string|max:255|unique:employees,email,'.$this->route('employee')->id,
             'gender' => 'required|in:male,female',
             'age' => 'required|integer|string|min:16|max:99',
-            'phone' => 'nullable|numeric|max:255',
+            'phone' => 'required|numeric|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'role_id' => 'required|integer|exists:roles,id',
             'team_id' => 'required|integer|exists:teams,id',

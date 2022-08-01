@@ -52,7 +52,9 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (AuthenticationException $e) {
-            return ResponseFormatter::error('Unauthenticated.', 401);
+            return request()->expectsJson()
+                ? ResponseFormatter::error('Unauthenticated.', 401)
+                : redirect('login');
         });
     }
 }
